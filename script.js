@@ -23,4 +23,32 @@ $(document).ready(function () {
   $("#currentDay").html(moment().format('MMMM Do YYYY, h:mm a'));
   
   } setInterval(addDate, 1000);
-})
+
+  for (var i = 0; i <= 12; i++) {  
+
+    var inputHour = $("#" + i + "Row").attr("data-time");
+    var inputHourInt = parseInt(inputHour);
+
+    if (currentHourInt === inputHourInt) {
+        $("#" + i + "Row").addClass("present");
+    }
+    if (currentHourInt > inputHourInt) { 
+        $("#" + i + "Row").addClass("past");
+    }
+    if (currentHourInt < inputHourInt) {
+        $("#" + i + "Row").addClass("future");
+    }
+  }
+  saveBtn.on("click", function () { 
+
+    var rowHour = $(this).attr("data-hour"); 
+    var input = $("#" + rowHour + "Row").val();
+    localStorage.setItem(rowHour, input); 
+  });
+
+  function renderPlans() {
+    for (var i = 0; i <= 12; i++) {
+    $("#" + i + "Row").val(localStorage.getItem(i));
+    }
+  }
+});
